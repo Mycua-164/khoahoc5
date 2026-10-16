@@ -1,2 +1,199 @@
 # khoahoc5
 game thử thách
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robot thử thách – 4 mật lệnh khoa học</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+/* Font tiêu đề: iCiel (nếu đã cài trên máy); nội dung: Roboto */
+@font-face{font-family:iCiel;src:local("iCiel"),local("iCiel Gotham"),local("iCiel Panton");font-display:swap}
+:root{--navy:#19345f;--blue:#2878d0;--cyan:#62d9f5;--gold:#ffcf56;--paper:#ffffff;--green:#20b879;--red:#ef5b78}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#b9f0ff 0%,#fff3c8 48%,#d9f8df 100%);color:var(--navy);font-family:Roboto,Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
+button{font:inherit;cursor:pointer;border:0}
+.game{width:min(1180px,100%);min-height:680px;position:relative;overflow:hidden;border:3px solid #ffffff;border-radius:28px;background:linear-gradient(145deg,#ffffff 0%,#f1fbff 54%,#fff8e4 100%);box-shadow:0 18px 50px #36739a35;padding:clamp(18px,3vw,36px)}
+.game:before{content:"✦   •      ✦        •     ✦";position:absolute;inset:12px;pointer-events:none;opacity:.22;color:#48bde5;font-size:28px;letter-spacing:24px}
+header,.content,.bottom{position:relative;z-index:1}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;border-bottom:2px solid #d9eff8;padding-bottom:14px;color:var(--navy)}
+.brand{font-family:iCiel,Roboto,sans-serif;font-weight:900;letter-spacing:.04em;font-size:clamp(17px,2.4vw,26px)}
+.pill{background:#e7f7ff;border:1px solid #b7e5f5;border-radius:999px;padding:9px 14px;font-size:13px;color:#245b86;font-weight:700}
+.content{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(230px,.65fr);gap:28px;align-items:center;padding:clamp(20px,4vw,48px) 0 28px}
+h1,h2,h3{font-family:iCiel,Roboto,sans-serif;line-height:1.12;margin:0}
+h1{font-size:clamp(36px,6vw,68px);letter-spacing:-.025em}
+h2{font-size:clamp(28px,4vw,46px)}
+p{line-height:1.55}
+.eyebrow{color:#1687b7;font-weight:900;letter-spacing:.15em;text-transform:uppercase;font-size:13px;margin:0 0 14px}
+.lead{font-size:clamp(17px,2vw,22px);color:#456582;max-width:720px}
+.robot-card{background:linear-gradient(145deg,#d8f7ff,#7fc8ef);border-radius:28px;padding:20px;color:var(--navy);text-align:center;box-shadow:inset 0 0 0 2px #fff8}
+.robot{font-size:clamp(100px,14vw,170px);line-height:1.2;filter:drop-shadow(0 8px 2px #16456b44)}
+.robot svg{width:min(100%,230px);height:auto;overflow:visible}
+.robot-animated{animation:robotFloat 2.4s ease-in-out infinite;transform-origin:50% 70%}
+.antenna{transform-origin:110px 8px;animation:antennaGlow 1.2s ease-in-out infinite alternate}
+.eyes{animation:eyeBlink 4s infinite}
+@keyframes robotFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
+@keyframes antennaGlow{from{filter:drop-shadow(0 0 1px #ffd45e);transform:scale(.85)}to{filter:drop-shadow(0 0 9px #ffd45e);transform:scale(1.15)}}
+@keyframes eyeBlink{0%,45%,49%,100%{opacity:1}47%{opacity:.12}}
+.robot-speech{font-weight:700;font-size:16px;margin:6px 0 0;color:#245578}.trick-note{margin:12px 0 0;padding:12px 14px;border-radius:14px;background:#fff4cc;border:2px dashed #f3c64d;color:#7a5310;font-weight:800;line-height:1.4}.robot-card{border:3px solid #ffffff;box-shadow:0 8px 0 #c9e9f5,0 12px 25px #2c83b322}
+.btnrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.btn{padding:14px 20px;border-radius:14px;font-weight:900;transition:transform .15s,filter .15s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.primary{background:var(--gold);color:#17294a;box-shadow:0 5px 0 #c69d32}
+.secondary{background:#e9f7ff;color:#235780;border:2px solid #b9e5f6}
+.small{font-size:13px;color:#617b94}
+.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.rule{border-radius:18px;padding:18px;background:#ffffff;border:2px solid #d9edf7;box-shadow:0 5px 0 #e8f4f9}
+.rule .gesture{font-size:58px;display:block;margin-bottom:6px}
+.rule strong{font-family:iCiel,Roboto,sans-serif;font-size:20px}
+.rule p{margin:7px 0 0;color:#526b84}
+.question{background:#f7fbff;color:var(--navy);border-radius:24px;padding:clamp(20px,3vw,36px);box-shadow:0 12px 30px #0003}
+.question-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.number{background:#d9f7ff;color:#0d5786;border-radius:999px;padding:9px 13px;font-weight:900;font-size:13px}
+.timer{width:84px;height:84px;border-radius:50%;background:#e5f4ff;border:6px solid #60bce7;display:grid;place-items:center;color:#104b78;font-size:37px;font-weight:900;flex-shrink:0}
+.statement{font-size:clamp(24px,3.2vw,39px);line-height:1.28;font-weight:900;margin:10px 0 18px}
+.illustration{min-height:190px;border-radius:18px;background:linear-gradient(180deg,#eaf7ff,#d2e8f8);display:flex;align-items:center;justify-content:center;gap:18px;color:#123d66;padding:18px;flex-wrap:wrap}
+.chem-item{min-width:88px;text-align:center;font-size:13px;font-weight:800;color:#2d5577}
+.chem-icon{font-size:48px;display:grid;place-items:center;width:76px;height:76px;margin:0 auto 8px;line-height:1;border-radius:24px;background:#ffffff;border:2px solid #d6edf8;box-shadow:0 4px 0 #dceef5}
+.arrow{font-size:32px;font-weight:900;color:#2077ae}
+.instruction{font-weight:900;color:#d77a00;font-size:clamp(17px,2vw,22px);margin:18px 0 0}
+.reveal{border-radius:22px;padding:24px;background:#ffffff;border:2px solid #d8edf7;box-shadow:0 8px 0 #e8f4f9}
+.answer-tag{display:inline-block;border-radius:999px;padding:10px 17px;font-weight:900;font-size:clamp(18px,2.5vw,25px);margin:12px 0}
+.correct{background:#b7f7e3;color:#075b47}
+.check{background:#ffe2a5;color:#744300}
+.explain{font-size:clamp(17px,2vw,21px);color:#405d78}
+.final-message{font-size:clamp(30px,5vw,58px);font-family:iCiel,Roboto,sans-serif;line-height:1.2;font-weight:900;color:#ffdf75}
+.bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:2px solid #d9eff8;padding-top:16px;color:#59758f;font-size:13px}
+.progress{height:8px;border-radius:99px;background:#dceef6;overflow:hidden;flex:1;max-width:250px}
+.progress span{height:100%;display:block;background:linear-gradient(90deg,#43c6e8,#4fcb91);width:0%;transition:width .3s}
+.hidden{display:none!important}
+@media(max-width:760px){body{padding:0}.game{border-radius:0;min-height:100vh;padding:18px}.content{grid-template-columns:1fr;gap:18px;padding:24px 0}.robot-card{order:-1}.robot{font-size:100px}.robot-card{padding:12px}.rule-grid{grid-template-columns:1fr 1fr}.rule{padding:12px}.rule .gesture{font-size:43px}.timer{width:65px;height:65px;font-size:29px;border-width:4px}.bottom{flex-wrap:wrap}}
+
+.chem-icon.sand-glass{font-size:0;position:relative;background:linear-gradient(to bottom, #fff 0 100%);overflow:hidden}
+.chem-icon.sand-glass:before{content:"";position:absolute;left:20px;right:20px;top:10px;height:48px;border:3px solid #67bfe9;border-top:0;border-radius:0 0 12px 12px;background:linear-gradient(to bottom,rgba(120,215,255,.5),rgba(120,215,255,.25) 78%,transparent 79%)}
+.chem-icon.sand-glass:after{content:"";position:absolute;left:24px;right:24px;bottom:15px;height:12px;border-radius:50% 50% 8px 8px;background:repeating-linear-gradient(135deg,#c58b42 0 4px,#e8c27c 4px 7px)}
+.chem-icon.ash-icon{font-size:0;position:relative}
+.chem-icon.ash-icon:before{content:"";width:42px;height:26px;background:radial-gradient(circle at 25% 65%,#444 0 4px,transparent 5px),radial-gradient(circle at 60% 35%,#555 0 5px,transparent 6px),radial-gradient(circle at 75% 75%,#777 0 4px,transparent 5px),radial-gradient(circle at 45% 80%,#333 0 5px,transparent 6px);display:block}
+.chem-icon.ash-icon:after{content:"";position:absolute;bottom:14px;left:17px;width:42px;height:8px;border-radius:50%;background:#b9b9b9}
+
+.voice-setting{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 14px;color:#245578;font-weight:800}
+.voice-setting select{border:2px solid #b9e5f6;border-radius:12px;padding:9px 10px;background:#fff;color:#19345f;font:inherit;max-width:100%}
+.voice-setting button{padding:9px 13px;font-size:13px}
+</style>
+</head>
+<body>
+<main class="game">
+<header>
+  <div class="brand">⚗ ROBOT THỬ THÁCH</div>
+  <div class="pill" id="roundPill">PHÒNG THÍ NGHIỆM KHOA HỌC</div>
+</header>
+<section class="content" id="screen"></section>
+<footer class="bottom">
+  <span id="footText">Tư duy trước – trả lời sau!</span>
+  <div class="progress"><span id="progressBar"></span></div>
+  <span id="pageText">Sẵn sàng</span>
+</footer>
+</main>
+<script>
+const rounds = [
+ {statement:"Muối tan hoàn toàn trong nước, ta thu được dung dịch nước muối!",trick:"Tôi không còn nhìn thấy hạt muối… vậy chắc muối đã biến mất hoàn toàn nhỉ?",answer:true,explain:"Chính xác! Muối tan trong nước tạo thành dung dịch nước muối.",items:[["🧂","Muối"],["＋",""],["💧","Nước"],["→",""],["🥛","Nước muối"]]},
+ {statement:"Cát trộn với nước, cát tan hoàn toàn trong nước và tạo thành dung dịch!",trick:"Tôi thấy cát nhỏ xíu! Biết đâu khuấy thật lâu thì cát cũng tan như muối?",answer:false,explain:"Cần kiểm chứng! Cát không tan trong nước. Các hạt cát lắng xuống đáy cốc, tạo thành hỗn hợp không đồng nhất.",items:[["🏜️","Cát"],["＋",""],["💧","Nước"],["→",""],["🧪",""]]},
+ {statement:"Nước đá tan thành nước là sự biến đổi hóa học!",trick:"Có vẻ nước đá đã biến thành một thứ khác rồi! Hay là tôi đang nhầm giữa đổi trạng thái và tạo chất mới?",answer:false,explain:"Cần kiểm chứng! Nước đá tan là sự biến đổi trạng thái. Chất vẫn là nước, không tạo chất mới nên đây là biến đổi vật lí.",items:[["🧊","Nước đá"],["→",""],["💧","Nước"],["✨",""]]},
+ {statement:"Giấy cháy thành tro là một sự biến đổi hóa học!",trick:"Tôi nghĩ giấy chỉ đổi màu thôi… hay khi cháy, giấy còn tạo ra chất mới?",answer:true,explain:"Chính xác! Khi cháy, giấy tạo ra chất mới như tro và khí. Vì có chất mới hình thành nên đây là biến đổi hóa học.",items:[["📄","Giấy"],["→",""],["🔥","Bị đốt"],["→",""],["⚫","Tro"]]}
+];
+let screenIndex=-1, locked=false, timerId=null, remaining=3;
+const screen=document.getElementById('screen');
+const roundPill=document.getElementById('roundPill');
+const progressBar=document.getElementById('progressBar');
+const pageText=document.getElementById('pageText');
+const footText=document.getElementById('footText');
+function robotCard(speech="Tôi là Robo! Nhưng đừng tin tôi ngay — hãy tự suy nghĩ nhé!"){
+ return `<aside class="robot-card"><div class="robot robot-animated" aria-label="Robot dẫn chuyện"><svg viewBox="0 0 220 230" role="img" aria-label="Robot khoa học thân thiện"><defs><linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".55" stop-color="#9feaff"/><stop offset="1" stop-color="#3295d7"/></linearGradient><linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#123c72"/><stop offset="1" stop-color="#071a3c"/></linearGradient></defs><ellipse cx="110" cy="215" rx="62" ry="9" fill="#174c78" opacity=".25"/><path d="M110 20V8" stroke="#1769aa" stroke-width="6" stroke-linecap="round"/><circle cx="110" cy="8" r="8" fill="#ffd45e" class="antenna"/><rect x="40" y="25" width="140" height="112" rx="38" fill="url(#metal)" stroke="#fff" stroke-width="4"/><rect x="53" y="39" width="114" height="82" rx="27" fill="url(#screen)"/><g class="eyes"><ellipse cx="82" cy="75" rx="10" ry="14" fill="#6ee7f9"/><ellipse cx="138" cy="75" rx="10" ry="14" fill="#6ee7f9"/></g><path d="M87 98Q110 116 133 98" fill="none" stroke="#6ee7f9" stroke-width="5" stroke-linecap="round"/><path d="M40 61H28Q17 61 17 75V94Q17 108 31 108H41M180 61H192Q203 61 203 75V94Q203 108 189 108H179" fill="none" stroke="#62c8f3" stroke-width="10" stroke-linecap="round"/><rect x="70" y="138" width="80" height="61" rx="20" fill="url(#metal)" stroke="#fff" stroke-width="4"/><circle cx="110" cy="160" r="11" fill="#1769aa"/><circle cx="110" cy="160" r="5" fill="#6ee7f9"/><path d="M70 151L51 165 45 151M150 151L169 165 175 151" fill="none" stroke="#9feaff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M84 198L75 211M136 198L145 211" stroke="#62c8f3" stroke-width="12" stroke-linecap="round"/><path d="M89 213H69M131 213H151" stroke="#fff" stroke-width="8" stroke-linecap="round"/></svg></div><p class="robot-speech">${speech}</p></aside>`;
+}
+function setFooter(text,page,progress){footText.textContent=text;pageText.textContent=page;progressBar.style.width=progress+'%';}
+function intro(){
+ clearInterval(timerId);screenIndex=-1;roundPill.textContent="PHÒNG THÍ NGHIỆM KHOA HỌC";
+ screen.innerHTML=`<div><p class="eyebrow">Nhiệm vụ tư duy phản biện</p><h1>4 MẬT LỆNH<br><span style="color:#1599c6">KHOA HỌC</span></h1><p class="lead">Robot sẽ đưa ra 4 phát biểu. Có câu đúng, có câu sai. Em hãy tự suy nghĩ và kiểm chứng kiến thức của mình!</p><div class="btnrow"><button class="btn primary" onclick="rules()">BẮT ĐẦU GAME ▶</button><button class="btn secondary" onclick="toggleVoice()">🔊 Bật giọng đọc</button></div><p class="small">Mỗi mật lệnh có 3 giây suy nghĩ. Cả lớp chơi tại chỗ, không cần di chuyển bàn ghế.</p></div>${robotCard("Chào các nhà khoa học nhí! Sẵn sàng bắt đầu thử thách chưa?")}`;
+ setFooter("Tư duy trước – trả lời sau!","Mở đầu",0);
+}
+function rules(){
+ screen.innerHTML=`<div><p class="eyebrow">Luật chơi</p><h2>Nghe kỹ – nghĩ nhanh – tự quyết định!</h2><div class="rule-grid"><div class="rule"><span class="gesture">🙌</span><strong>CHÍNH XÁC!</strong><p>Giơ hai tay lên cao nếu em cho rằng phát biểu đúng.</p></div><div class="rule"><span class="gesture">❌</span><strong>CẦN KIỂM CHỨNG!</strong><p>Bắt chéo hai tay trước ngực thành hình chữ X nếu em cho rằng phát biểu sai.</p></div></div><p class="instruction">⚠ Robot có thể sai. Đừng nhìn bạn, đừng làm theo robot!</p><div class="btnrow"><button class="btn primary" onclick="startRound(0)">TÔI ĐÃ SẴN SÀNG →</button></div></div>${robotCard("Khi đồng hồ chạy, hãy chọn động tác của chính mình. Robot chỉ công bố đáp án sau 3 giây!")}`;
+ setFooter("Nhớ quy ước hai động tác","Luật chơi",0);
+}
+function drawItems(items){
+ return items.map(([icon,label])=>`<div class="chem-item"><span class="chem-icon ${label.includes("Cát lắng") ? "sand-glass" : label === "Tro" ? "ash-icon" : ""}">${icon}</span>${label}</div>`).join('');
+}
+async function startRound(i){
+ clearInterval(timerId);
+ if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+ screenIndex=i;locked=false;remaining=3;
+ const r=rounds[i];roundPill.textContent=`MẬT LỆNH ${i+1} / 4`;
+ screen.innerHTML=`<div class="question"><div class="question-top"><span class="number">MẬT LỆNH ${i+1}</span><div class="timer" id="timer">🔊</div></div><p class="statement">“${r.statement}”</p><div class="illustration">${drawItems(r.items)}</div><p class="instruction" style="color:#d77a00">TỰ SUY NGHĨ! ĐỪNG LÀM THEO ROBOT.</p><p id="countdownHint" style="font-weight:900;color:#125786">Robot đang đọc mật lệnh… Đồng hồ sẽ chạy sau khi đọc xong.</p></div>${robotCard("Hãy lắng nghe hết câu rồi mới đưa ra lựa chọn!")}`;
+ setFooter("Đang đọc mật lệnh…","Câu "+(i+1)+"/4",i/4*100);
+ await speak(`Mật lệnh ${i+1}. ${r.statement}`);
+ // Chỉ bắt đầu 3 giây sau khi robot đọc xong toàn bộ mật lệnh.
+ if (screenIndex !== i) return;
+ remaining=3;
+ const timer=document.getElementById('timer');
+ const hint=document.getElementById('countdownHint');
+ if(timer) timer.textContent=remaining;
+ if(hint) hint.textContent="BẮT ĐẦU! Em có 3 giây để chọn động tác.";
+ speak("Ba.");
+ timerId=setInterval(()=>{
+   remaining--;
+   const t=document.getElementById('timer');
+   if(t)t.textContent=remaining>0?remaining:"⏱";
+   if(remaining===2) speak("Hai.");
+   if(remaining===1) speak("Một.");
+   if(remaining<=0){
+     clearInterval(timerId);
+     const t=document.getElementById('timer');
+     if(t)t.textContent="✓";
+     const hint=document.getElementById('countdownHint');
+     if(hint)hint.textContent="Hết giờ! Giáo viên nhấn nút bên dưới để công bố đáp án.";
+     const action=document.querySelector('.question');
+     if(action){
+       const btn=document.createElement('button');
+       btn.className='btn primary';
+       btn.textContent='🔎 XEM KẾT QUẢ';
+       btn.style.marginTop='14px';
+       btn.onclick=()=>reveal(i);
+       action.appendChild(btn);
+     }
+     speak("Hết giờ! Các em hãy giữ nguyên lựa chọn. Giáo viên nhấn xem kết quả để công bố đáp án.");
+   }
+ },1000);
+}
+function reveal(i){
+ const r=rounds[i];roundPill.textContent=`ĐÁP ÁN ${i+1} / 4`;
+ screen.innerHTML=`<div class="reveal"><div class="answer-tag ${r.answer?"correct":"check"}">${r.answer?"🙌 CHÍNH XÁC!":"❌ CẦN KIỂM CHỨNG!"}</div><div class="illustration">${drawItems(r.items)}</div><div class="btnrow">${i<3?`<button class="btn primary" onclick="startRound(${i+1})">MẬT LỆNH TIẾP THEO →</button>`:`<button class="btn primary" onclick="finish()">XEM THÔNG ĐIỆP CUỐI →</button>`}</div></div>${robotCard(r.answer?"Tuyệt vời! Nhưng hãy luôn dựa vào bằng chứng khoa học.":"Rất tốt! Biết nghi ngờ và kiểm chứng là tư duy khoa học.")}`;
+ setFooter("Đối chiếu với kiến thức khoa học","Đáp án "+(i+1)+"/4",(i+1)/4*100);
+ speak(r.answer?"Chính xác!":"Cần kiểm chứng!");
+}
+function finish(){
+ screen.innerHTML=`<div><p class="eyebrow">Nhiệm vụ hoàn thành</p><h2>Các nhà khoa học nhí thật tuyệt vời!</h2><p class="lead">Hãy quan sát, đặt câu hỏi, kiểm chứng bằng chứng và suy nghĩ độc lập trước khi tin vào bất kỳ câu trả lời nào.</p><p class="final-message">A.I. CÓ THỂ HỖ TRỢ CHÚNG TA, NHƯNG KHÔNG PHẢI LÚC NÀO A.I. CŨNG ĐÚNG!</p><div class="btnrow"><button class="btn primary" onclick="intro()">↻ CHƠI LẠI</button><button class="btn secondary" onclick="toggleVoice()">🔊 Bật/tắt giọng đọc</button></div></div>${robotCard("Cảm ơn các em! Hãy luôn là người học thông minh và biết kiểm chứng.")}`;
+ roundPill.textContent="HOÀN THÀNH";setFooter("Luôn suy nghĩ độc lập!","Kết thúc",100);speak("Ay ai có thể hỗ trợ chúng ta, nhưng không phải lúc nào ay ai cũng đúng!");
+}
+let voiceOn=false;
+function toggleVoice(){voiceOn=!voiceOn;if(voiceOn)speak("Xin chào các nhà khoa học nhí!");}
+function speak(text){
+ return new Promise(resolve=>{
+   if(!voiceOn||!("speechSynthesis"in window)){resolve();return;}
+   window.speechSynthesis.cancel();
+   const u=new SpeechSynthesisUtterance(text);
+   u.lang="vi-VN";u.rate=.88;u.pitch=1.08;u.volume=1;
+   const voices=window.speechSynthesis.getVoices();
+   const vi=voices.find(v=>/^vi(-|$)/i.test(v.lang)) || voices.find(v=>/Vietnamese|Tiếng Việt/i.test(v.name));
+   if(vi)u.voice=vi;
+   u.onend=()=>resolve();
+   u.onerror=()=>resolve();
+   window.speechSynthesis.speak(u);
+   // Safety fallback so the game never gets stuck if the browser fails to emit onend.
+   setTimeout(()=>resolve(),Math.max(4500,text.length*115));
+ });
+}
+intro();
+</script>
+</body>
+</html>
